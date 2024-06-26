@@ -31,6 +31,9 @@ Decrement the value in the specified register
 
 ### SET {Register} {value}
 
+### PSR {Register}
+Push the value of a register onto the stack
+
 ### ADD
 Pop the two top values from the stack, add them and push the result to the stack
 

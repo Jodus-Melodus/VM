@@ -15,6 +15,7 @@ typedef enum
 	JNZ,
 	INC,
 	DEC,
+	PSR,
 	HLT
 } InstructionSet;
 
@@ -25,10 +26,9 @@ typedef enum
 } Registers;
 
 const int program[] = {
-	PSH, 2,
-	PSH, 3,
 	SET, A, 5,
 	INC, A,
+	PSR, A,
 	POP,
 	HLT
 };
@@ -92,8 +92,15 @@ void evaluate(int instruction)
 		value2 = pop();
 		push(value2 % value1);
 		break;
+	case PSR:
+		push(registers[fetch()]);
+		break;
 	case SET:
-		registers[fetch()] = fetch();
+		{
+			int reg = fetch();
+			int value = fetch();
+		registers[reg] = value;
+		}
 		break;
 	case INC:
 		registers[fetch()]++;
@@ -133,8 +140,6 @@ int main()
 	{
 		evaluate(fetch());
 	}
-
-	printf("%d\n", registers[A]);
 
 	return 0;
 }
