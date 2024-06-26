@@ -2,14 +2,14 @@
 
 ## Registers
 
-A - Multipurpose register
-B - Multipurpose register
-C - Multipurpose register
-D - Multipurpose register
-E - Multipurpose register
-F - Multipurpose register
-IP - Instruction pointer
-SP - Stack pointer
+- A - Multipurpose register
+- B - Multipurpose register
+- C - Multipurpose register
+- D - Multipurpose register
+- E - Multipurpose register
+- F - Multipurpose register
+- IP - Instruction pointer
+- SP - Stack pointer
 
 ## Flags
 
