@@ -56,12 +56,14 @@ int registers[NUM_OF_REGISTERS];	// Registers
 
 void push(int value)
 {
-	stack[registers[SP]++] = value;
+	if (registers[SP] + 1 < 256)
+		stack[registers[SP]++] = value;
 }
 
 int pop()
 {
-	return stack[--registers[SP]];
+	if (registers[SP] - 1 > 0)
+		return stack[--registers[SP]];
 }
 
 int fetch()
