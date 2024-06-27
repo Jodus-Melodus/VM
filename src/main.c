@@ -17,6 +17,8 @@ typedef enum
 	DEC,
 	PSR,
 	PTR,
+	JNS,
+	JSF,
 	HLT
 } InstructionSet;
 
@@ -27,28 +29,25 @@ typedef enum
 } Registers;
 
 const int program[] = {
-	SET, C, 0,	// 0
-	SET, A, 1,	// 1
-	SET, B, 1,	// 2
-			//
-	PSR, A,		// 3
-	PSR, B,		// 4
-	ADD,		// 5
-	PSR, C,		// 6
-	JZ, 9,		// 7
-	JNZ, 13,	// 8
-			//
-	POP,		// 9
-	SET, C, 1,	// 10
-	PTR, B,		// 11
-	JMP, 3,		// 12
-			//
-	POP,		// 13
-	SET, C, 0,	// 14
-	PTR, A,		// 15
-	JMP, 3,		// 16
-			//
-	HLT		// 17
+	SET, C, 0,
+	SET, A, 1,
+	SET, B, 1,
+	PSR, A,
+	PSR, B,
+	ADD,
+	JSF, 38,
+	PSR, C,	
+	JZ, 20,
+	JNZ, 28,
+	POP,
+	SET, C, 1,
+	PTR, B,
+	JMP, 9,
+	POP,
+	SET, C, 0,
+	PTR, A,
+	JMP, 9,
+	HLT
 };
 
 int running = 1;
@@ -144,6 +143,18 @@ void evaluate(int instruction)
 			registers[IP] = fetch();
 		}
 		break;
+	case JSF:
+		if (registers[SF] == 1)
+		{
+			registers[IP] = fetch();
+		}
+		break;
+	case JNS:
+		if (registers[SF] == 0)
+		{
+			registers[IP] = fetch();
+		}
+		break;
 	}
 
 	registers[ZF] = (stack[registers[SP] - 1] == 0) ? 1 : 0;
@@ -161,10 +172,6 @@ int main()
 	{
 		evaluate(fetch());
 	}
-
-	printf("A : %d\n", registers[A]);
-	printf("B : %d\n", registers[B]);
-	printf("C : %d\n", registers[C]);
 
 	return 0;
 }
